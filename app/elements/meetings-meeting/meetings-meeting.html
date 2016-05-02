@@ -1,0 +1,86 @@
+<dom-module id="meetings-meeting">
+  <style>
+  </style>
+  <template>
+    <!--<firebase-collection location="{{ref}}"></firebase-collection>-->
+    <div>
+      <!--<paper-input-container>-->
+      <!--<label for="meeting-name">Meeting Name</label>-->
+      <!--<input is="iron-input" id="meeting-name" bind-value="{{meetingName}}" disabled>-->
+      <!--</paper-input-container>-->
+      <paper-input-container>
+        <label for="meeting-owner">Meeting Owner <!-- Intentionally nested paper-button -->
+          <paper-button onclick="{{toggleEdit}}">edit</paper-button>
+        </label>
+        <input id="meeting-owner" is="iron-input" type="text" bind-value="{{meeting.owner}}" disabled>
+      </paper-input-container>
+      <paper-input-container>
+        <label for="meeting-venue">Meeting Venue <!-- Intentionally nested paper-button -->
+          <paper-button onclick="{{toggleEdit}}">edit</paper-button>
+        </label>
+        <input id="meeting-venue" is="iron-input" type="text" bind-value="{{meeting.venue}}" disabled>
+      </paper-input-container>
+      <paper-input-container>
+        <label for="meeting-date">Meeting Date <!-- Intentionally nested paper-button -->
+          <paper-button onclick="{{toggleEdit}}">edit</paper-button>
+        </label>
+        <input is="iron-input" id="meeting-date" type="datetime-local" bind-value="{{meeting.date}}" disabled>
+      </paper-input-container>
+      <paper-input-container>
+        <label for="meeting-organizers">Meeting Organizers</label>
+        <input id="meeting-organizers" is="iron-input" bind-value="{{meeting.organizers}}" disabled>
+
+        <!--TODO -- Make a <user-card> kind of element to drop in here; tied to Users db call-->
+        <!--<div id="organizers-container">-->
+        <!--<template is="dom-repeat" items="{{meeting.organizers}}" as="organizer">-->
+        <!--<paper-item>{{organizer}}</paper-item>-->
+        <!--</template>-->
+        <!--</div>-->
+
+      </paper-input-container>
+      <paper-input-container>
+        <label for="meeting-timeline">Meeting Timeline</label>
+        <!-- TODO -- Build Meeting Timeline Drag And Drop Element-->
+        <!-- TODO -- Shouldn't be too hard using Sortable-->
+        <input id="meeting-timeline" is="iron-input" bind-value="{{meeting.timeline}}" disabled>
+      </paper-input-container>
+    </div>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        is: 'meetings-meeting',
+
+        properties: {
+          meetingName: {
+            type: String,
+            notify: true
+          }
+        },
+
+        ready: function () {
+          this.meeting = {};
+
+          var self = this;
+
+          this.ref = new Firebase("https://privatehub.firebaseio.com/meetings/" + self.meetingName);
+          this.ref.on('value', function (meeting) {
+            self.meeting = meeting.val();
+          });
+
+          this.toggleEdit = function (evt) {
+            evt.preventDefault();
+            var input = Polymer.dom(evt.target).parentNode.host.parentNode.nextElementSibling;
+            if (input.disabled) {
+              evt.target.textContent = "Save";
+            } else {
+              evt.target.textContent = "Edit";
+              self.ref.set(self.meeting);
+            }
+            input.disabled = !input.disabled;
+          }
+        }
+      })
+    }());
+  </script>
+</dom-module>

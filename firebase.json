@@ -1,0 +1,13 @@
+{
+  "firebase": "privatehub",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ],
+  "rewrites": [ {
+    "source": "!{/bower_compontnets,/elements}/**",
+    "destination": "/index.html"
+  } ]
+}

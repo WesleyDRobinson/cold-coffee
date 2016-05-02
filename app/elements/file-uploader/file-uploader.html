@@ -1,0 +1,31 @@
+<link rel="import"
+<dom-module id="file-uploader">
+
+  <template>
+    <style>
+      /* CSS rules */
+    </style>
+
+    <paper-material elevation="1">
+
+      <div on-tap="handleTap">{{greeting}}</div>
+
+    </paper-material>
+
+  </template>
+
+  <script>
+    // element registration
+    Polymer({
+      is: "file-uploader",
+
+      // add properties and methods on the element's prototype
+
+      greeting: "hello",
+      handleTap: function (e) {
+        return console.log("handled Internally");
+      }
+    });
+  </script>
+
+</dom-module>

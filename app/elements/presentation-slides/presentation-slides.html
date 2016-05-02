@@ -1,0 +1,67 @@
+<dom-module id="presentation-slides">
+  <style>
+
+  </style>
+  <template>
+
+    <div class="sortable-slides-container">
+      <template is="dom-repeat" items="{{slides}}" as="slide">
+        <iron-image data-id="{{index}}" src="{{slide}}"></iron-image>
+      </template>
+    </div>
+
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'presentation-slides',
+
+        properties: {
+          dataPresentation: {
+            type: Array,
+            notify: true
+          }
+        },
+
+        slides: {
+          type: Array,
+          notify: true
+        },
+
+        ready: function () {
+          this.slides = this.dataPresentation.slides.slides;
+        },
+
+        attached: function () {
+
+          var self = this;
+          // Get all the slide containers
+          var slidesArr = [].slice.call(document.querySelectorAll('.sortable-slides-container'));
+          slidesArr.forEach(function (slides) {
+            // Use the RubaXa/Sortable wrapper to make slides sortable
+            // Also maintains binding and yield successful Firebase syncing
+            Sortable.create(slides, {
+              group: {
+                name: 'dinos',
+                pull: false
+              },
+              animation: 150,
+              scroll: true,
+              onEnd: function (evt) {
+                var ref = new Firebase("https://privatehub.firebaseio.com/presentations/" + self.dataPresentation.title + "/slides");
+                var newArray = [];
+                [].slice.call(evt.to.children).forEach(function (el) {
+                  if (el.tagName === "TEMPLATE") return;
+                  return newArray.push(el.src);
+                });
+                ref.set(newArray);
+              }
+            });
+          });
+        }
+      });
+    }());
+  </script>
+
+</dom-module>

@@ -1,0 +1,44 @@
+<dom-module id="wesley-resume">
+  <style>
+    .pdf-container {
+      position: relative;
+      padding-bottom: 107%;
+      padding-top: 0px;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .pdf-container object {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+  </style>
+
+  <template>
+    <a href="https://drive.google.com/file/d/0B0zGaowsVWyxYkJmSVZPdGhLT3M/view?usp=sharing">View in
+      Google Drive</a>
+    <div class="pdf-container">
+      <object data="/images/resume.pdf" type="application/pdf"
+              height="792" width="612">
+        <p>Unfortunately, embedding the resume failed</p>
+      </object>
+    </div>
+
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'wesley-resume',
+
+        properties: {},
+
+        ready: function () {
+        }
+      });
+    }());
+  </script>
+</dom-module>

@@ -1,0 +1,131 @@
+<dom-module id="meeting-timeline">
+
+  <style is="custom-style">
+    .timeline-container {
+      padding-top: 12px;
+      background-color: white;
+      display: inline-block;
+      width: 240px;
+      height: 228px;
+      margin: 12px;
+    @apply(- -shadow-elevation-2dp);
+    }
+
+    .short {
+      padding-top: 12px;
+      height: 216px;
+    }
+
+    h4 {
+      margin-left: 24px;
+    }
+
+    .avatar {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #ccc;
+    }
+
+    .blue {
+      background-color: var(--paper-light-blue-300);
+    }
+
+    .red {
+      background-color: var(--paper-red-300);
+    }
+
+    .orange {
+      background-color: var(--paper-amber-300);
+    }
+
+    .green {
+      background-color: var(--paper-green-300);
+    }
+  </style>
+
+  <template>
+
+    <firebase-collection location="{{computeLocation()}}" data="{{timeline}}"></firebase-collection>
+    <h4>Timeline:</h4>
+
+    <div class="timeline-container">
+
+      <template is="dom-repeat" items="{{timeline}}">
+        <paper-icon-item>
+          <div class="avatar blue" item-icon></div>
+          <paper-item-body two-line>
+            <div>{{item.value}}</div>
+            <div secondary>Event Type: tbd</div>
+          </paper-item-body>
+          <iron-icon icon="icons:reorder" class="handle"></iron-icon>
+        </paper-icon-item>
+      </template>
+
+    </div>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'meeting-timeline',
+
+        properties: {
+          meetingName: String
+        },
+        computeLocation: function () {
+          //TODO - make dynamic based on this.meetingName
+          //hardcoded while I work on the look of the element
+          return 'https://privatehub.firebaseio.com/meetings/Business Proposals/timeline';
+        },
+        ready: function () {
+          var self = this;
+          //          var ref = new Firebase('https://privatehub.firebaseio.com/meetings/' + self.meetingName + '/timeline');
+          //          ref.on('value', function (timelineObject) {
+          //            self.timeline = [];
+          //            timelineObject.forEach()
+          //            var tempArray = [];
+          //            timeline.forEach(function (meetingObject) {
+          //              var name = meetingObject.key();
+          //              var info = meetingObject.val();
+          //              var presentation = {
+          //                name: name,
+          //                info: info
+          //              };
+          //              tempArray.push(presentation);
+          //            });
+          //            self.meetings = tempArray;
+          //          });
+
+          console.log("hello")
+          // Get all the timeline containers
+          var timelinesArr = [].slice.call(document.querySelectorAll('.timeline-container'));
+          timelinesArr.forEach(function (timeline) {
+            console.log("hello");
+            // Use the RubaXa/Sortable wrapper to make slides sortable
+            // Also maintains binding and yield successful Firebase syncing
+            Sortable.create(timeline, {
+              //              group: {
+              //                name: 'dinos',
+              //                pull: false
+              //              },
+              //              animation: 150,
+              //              scroll: true,
+              //              onEnd: function (evt) {
+              //                var ref = new Firebase("https://privatehub.firebaseio.com/presentations/" + self.dataPresentation.title + "/slides");
+              //                var newArray = [];
+              //                [].slice.call(evt.to.children).forEach(function (el) {
+              //                  if (el.tagName === "TEMPLATE") return;
+              //                  return newArray.push(el.src);
+              //                });
+              //                ref.set(newArray);
+              //              }
+            });
+          });
+        }
+      });
+    }());
+  </script>
+</dom-module>

@@ -1,0 +1,52 @@
+<dom-module id="meetings-container">
+
+  <style>
+  </style>
+
+  <template>
+    <template is="dom-repeat" items="{{meetings}}" as="meeting">
+      <div class="meeting-wrapper" onclick="{{toggleMain}}">
+        <paper-button>{{meeting.name}}</paper-button>
+        <iron-collapse>
+          <meetings-meeting meeting="{{meeting}}"></meetings-meeting>
+        </iron-collapse>
+      </div>
+    </template>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'meetings-container',
+
+        properties: {},
+
+        ready: function () {
+
+          var self = this;
+          var ref = new Firebase("https://privatehub.firebaseio.com/meetings/");
+          ref.on("value", function (meetingsObject) {
+            var tempArray = [];
+            meetingsObject.forEach(function (meetingObject) {
+              var name = meetingObject.key();
+              var info = meetingObject.val();
+              var presentation = {
+                name: name,
+                info: info
+              };
+              tempArray.push(presentation);
+            });
+            self.meetings = tempArray;
+          });
+
+          this.toggleMain = function (e) {
+            e.preventDefault();
+            if (e.target.parentNode === this.firstElementChild) {
+              return this.lastElementChild.toggle();
+            }
+          };
+        }
+      })
+    }());
+  </script>
+</dom-module>

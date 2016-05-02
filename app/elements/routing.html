@@ -1,0 +1,81 @@
+<script src="../bower_components/page/page.js"></script>
+<script>
+    window.addEventListener('WebComponentsReady', function () {
+
+        // Removes end / from app.baseUrl which page.base requires
+        if (window.location.port === '') {
+            page.base(app.baseUrl.replace(/\/$/, ''));
+        }
+
+        // Middleware
+        function scrollToTop(ctx, next) {
+            app.scrollPageToTop();
+            next();
+        }
+
+        function closeDrawer(ctx, next) {
+            app.closeDrawer();
+            next();
+        }
+
+        function setFocus(selected) {
+            Polymer.dom(document)
+                    .querySelector('section[data-route="' + selected + '"] .focus-target')
+                    .focus();
+        }
+
+        // Routes
+        page('*', scrollToTop, closeDrawer, function (ctx, next) {
+            next();
+        });
+
+        page('/', function () {
+            app.route = 'home';
+            setFocus(app.route);
+        });
+
+        page(app.baseUrl, function () {
+            app.route = 'home';
+            setFocus(app.route);
+        });
+
+        page('/bio', function () {
+            app.route = 'bio';
+            setFocus(app.route);
+        });
+
+//    example of passing data down
+//        <!-- TODO use for blog element -->
+
+//    page('/bio/:name', function(data) {
+//      app.route = 'user-info';
+//      app.params = data.params;
+//      setFocus(app.route);
+//    });
+
+        page('/blog', function () {
+            app.route = 'blog';
+            setFocus(app.route);
+        })
+
+        page('/contact', function () {
+            app.route = 'contact';
+            setFocus(app.route);
+        });
+
+        page('/upload', function () {
+            app.route = 'upload';
+            setFocus(app.route);
+        });
+
+        // 404
+        page('*', function () {
+            app.$.toast.text = 'Can\'t find: ' + window.location.href + '. Redirected you to Home Page';
+            app.$.toast.show();
+            page.redirect(app.baseUrl);
+        });
+
+        page();
+
+    });
+</script>

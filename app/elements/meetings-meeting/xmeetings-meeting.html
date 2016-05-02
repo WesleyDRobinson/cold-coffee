@@ -1,0 +1,47 @@
+<dom-module id="meetings-meeting">
+  <style>
+  </style>
+  <template>
+    <div>
+      <paper-input-container>
+        <label for="meeting-name">Meeting Name</label>
+        <input is="iron-input" name="meeting-name" id="meeting-name" bind-value="{{meeting.name}}">
+      </paper-input-container>
+      <paper-input-container>
+        <label for="meeting-owner"></label>
+        <input id="meeting-owner" is="iron-input" type="text" bind-value="{{meeting.date}}">
+      </paper-input-container>
+      <!--<paper-input>-->
+      <!--<paper-input-container>-->
+      <!--<label for="meeting-date"></label>-->
+      <!--<input name="meeting-date" id="meeting-date" is="iron-input" placeholder="Date">-->
+      <!--</paper-input-container>-->
+      <!--</paper-input>-->
+      <!--<paper-input>-->
+      <!--<paper-input-container>-->
+      <!--<label for="meeting-organizers"></label>-->
+      <!--<input name="meeting-organizers" id="meeting-organizers" is="iron-input" placeholder="Organizers">-->
+      <!--</paper-input-container>-->
+      <!--</paper-input>-->
+    </div>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        is: 'meetings-meeting',
+
+        properties: {
+          meeting: {
+            type: Object,
+            notify: false
+          }
+        },
+
+        ready: function () {
+          console.log("inside", this.meeting);
+          //          document.querySelector("#meeting-name").bindValue = this.meeting.name;
+        }
+      })
+    }());
+  </script>
+</dom-module>

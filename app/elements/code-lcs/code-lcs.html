@@ -1,0 +1,101 @@
+<dom-module id="code-lcs">
+  <style>
+    code
+  </style>
+  <template>
+    <h2 class="font-display-header">Longest Common Subsequence</h2>
+
+    <p>Write a function called LCS that accepts two sequences, and returns the longest subsequence common to the passed
+      in sequences.</p>
+    <h4>NOTE:</h4>
+    <h5>
+      A subsequence is different from a substring in that terms of a subsequence need not be consecutive terms of the
+      original sequence.I found this.
+    </h5>
+
+    <p><a href="http://www.codewars.com/kata/52756e5ad454534f220001ef/train/javascript">See the full problem on Code
+      Wars</a> and check out the <a href="https://en.wikipedia.org/wiki/Longest_common_subsequence_problem">Wikipedia
+      article on LCS</a> for more info.
+    </p>
+
+    <pre>
+      <code>
+function longestCommonSubsequence (xString, yString) {
+
+     function recur (xString, yString, lcs) {
+         var xElement = xString.charAt(0);
+         var yElement = yString.charAt(0);
+         // Base case --&gt; out of string!
+         // return the LCS of this section
+         if (!xElement || !yElement) {
+             return lcs;
+         }
+         // First Property
+         if (xElement === yElement) {
+             // append element to Subseq
+             // remove element from each array
+             // find LCS of remaining section
+             return recur(xString.slice(1), yString.slice(1), lcs += xElement);
+         }
+
+         // Second Property
+         if (xElement !== yElement) {
+             // return the larger of the following cases:
+             // Case 1, the LCS does not end in xElement
+             var case1 = recur(xString.slice(1), yString, lcs);
+             // Case 2, the LCS does not end in yElement
+             var case2 = recur(xString, yString.slice(1), lcs);
+             return case1.length &gt; case2.length ? case1 : case2;
+         }
+     }
+
+     return recur(xString, yString, '');
+ }
+
+ // LCS Solution #2
+ function longestCommonSubsequence2 (xString, yString) {
+     // Base case --&gt; empty string
+     if (xString === '' || yString === '') {
+         return '';
+     }
+
+     // grab the first element
+     var xElement = xString.charAt(0);
+     var yElement = yString.charAt(0);
+
+     // First Property: elements match
+     if (xElement === yElement) {
+         // return element + the LCS of remaining sections
+         return xElement + longestCommonSubsequence2(xString.slice(1), yString.slice(1));
+     }
+
+     // Second Property: elements do not match
+     // return the longer of the following cases:
+     // Case 1, the LCS does not begin in xElement
+     var case1 = longestCommonSubsequence2(xString.slice(1), yString);
+     // Case 2, the LCS does not end in yElement
+     var case2 = longestCommonSubsequence2(xString, yString.slice(1));
+     return case1.length &gt; case2.length ? case1 : case2;
+ }
+
+ console.log('1a', longestCommonSubsequence('a', 'b')); // ''
+ console.log('2a', longestCommonSubsequence2('a', 'b')); // ''
+ console.log('1c', longestCommonSubsequence('BANANA', 'ATANA')); // 'AANA'
+ console.log('2c', longestCommonSubsequence2('BANANA', 'ATANA')); // 'AANA'
+      </code>
+    </pre>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'code-lcs',
+
+        properties: {},
+
+        ready: function () {
+        }
+      });
+    }());
+  </script>
+</dom-module>

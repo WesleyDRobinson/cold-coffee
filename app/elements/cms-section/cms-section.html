@@ -1,0 +1,31 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<dom-module id="icon-toggle">
+  <template>
+    <style>
+      /* local DOM styles go here */
+      :host {
+      }
+    </style>
+    <!-- local DOM goes here -->
+    <paper-material elevation="1">
+      <h1 class="page-title focus-target" tabindex="-1">Control Element</h1>
+
+    </paper-material>
+    <paper-material elevation="2">
+      <h1 class="page-title focus-target" tabindex="-1">Display Element</h1>
+      <firebase-collection
+        order-by-child="height"
+        limit-to-first="3"
+        location="https://dinosaur-facts.firebaseio.com/dinosaurs"
+        data="{{dinosaurs}}"></firebase-collection>
+      <template is="dom-repeat" items="[[dinosaurs]]" as="dinosaur">
+        <h4>[[dinosaur.__firebaseKey__]]</h4>
+        Height: <span>[[dinosaur.height]]</span>m
+      </template>
+    </paper-material>
+  </template>
+  <script>
+    Polymer({});
+  </script>
+</dom-module>

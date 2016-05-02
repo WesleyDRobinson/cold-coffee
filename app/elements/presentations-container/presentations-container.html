@@ -1,0 +1,59 @@
+<dom-module id="presentations-container">
+
+  <style>
+  </style>
+
+  <template>
+    <template is="dom-repeat" items="{{presentations}}" as="presentation" id="presentation-slides">
+      <div class="presentation-wrapper" onclick="{{toggleMain}}">
+        <paper-button>{{presentation.title}}</paper-button>
+        <iron-collapse>
+          <presentation-slides data-presentation="{{presentation}}"></presentation-slides>
+        </iron-collapse>
+      </div>
+    </template>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'presentations-container',
+
+        properties: {
+          presentations: {
+            type: Array,
+            notify: true
+          }
+        },
+
+        ready: function () {
+
+          var self = this;
+          var ref = new Firebase("https://privatehub.firebaseio.com/presentations/");
+          ref.once("value", function (presentations) {
+            var tempArray = [];
+            presentations.forEach(function (el) {
+              var title = el.key();
+              var slides = el.val();
+              var presentation = {
+                title: title,
+                slides: slides
+              };
+              tempArray.push(presentation);
+            });
+            self.presentations = tempArray;
+          });
+
+          this.toggleMain = function (e) {
+            e.preventDefault();
+            if (e.target.parentNode === this.firstElementChild) {
+              return this.lastElementChild.toggle();
+            }
+          };
+
+        }
+      });
+    }());
+  </script>
+
+</dom-module>
