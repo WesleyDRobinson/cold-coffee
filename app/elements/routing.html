@@ -47,7 +47,7 @@
         page('/blog', function () {
             app.route = 'blog';
             setFocus(app.route);
-        })
+        });
 
         page('/contact', function () {
             app.route = 'contact';
@@ -56,7 +56,11 @@
 
         page('/upload', function () {
             app.route = 'upload';
-            setFocus(app.route);
+        });
+
+        page('/tv', function () {
+            app.route = 'tv';
+            setFocus(app.route)
         });
 
         // 404
