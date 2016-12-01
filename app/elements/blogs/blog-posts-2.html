@@ -1,27 +1,5 @@
-<dom-module id="blog-posts">
+<dom-module id="blog-posts-2">
   <template>
-
-    <!-- JavaScript Thoughts -->
-    <marked-element>
-      <div class="markdown-html"></div>
-      <script type="text/markdown">
-For those learning JavaScript, I encourage you [check out this article](http://colintoh.com/blog/lodash-10-javascript-utility-functions-stop-rewriting) and, in general, the Lodash library.
-
-Functions like `each` and `foldl` are all over Segment’s code base. Similar functions are native to ES6 now, as `forEach` and `reduce`, so just part of “normal JavaScript”, but the library versions are typically more powerful, usually accepting primitives, [], {} values in the same function.
-[@ndhoule/each](https://github.com/ndhoule/each)
-[@ndhoule/foldl](https://github.com/ndhoule/foldl)
-vs
-[Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
-[Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
-
-Many of Segment’s early engineers were connected through http://component.github.io/ project, and highly modular, functional thinking is how [Segment was engineered from the outset](https://segment.com/blog/engineering-best-practices/)
-
-It seems clear that JavaScript has risen in popularity because of "**Prototypal Inheritance** (objects without classes, and prototype delegation, aka OLOO — Objects Linking to Other Objects), and **Functional Programming** (enabled by lambdas with closure)" -Eric Elliot, [Two Pillars of Javascript](https://medium.com/javascript-scene/the-two-pillars-of-javascript-ee6f3281e7f3)
-
-[First-order/ higher-order functions are a powerful concept](https://en.wikipedia.org/wiki/Fold_(higher-order_function) that lies at the heart of many modern engineering practices and should be given study.
-
-While functional-style programming is not new, it's interesting to note that Segment's engineers were creating useful functional-style middleware for node.js while much of the engineering community were still arguing Java vs PHP vs Ruby as the “best” language.
-      </script>
 
     <!--Host a Page in Seconds-->
     <marked-element>
@@ -148,7 +126,7 @@ I grew up on a cattle farm; a hillbilly in the Ozark Mountains of Arkansas.
 
   <script>
     Polymer({
-      is: 'blog-posts',
+      is: 'blog-posts-2',
       ready: function () {
       }
     });
